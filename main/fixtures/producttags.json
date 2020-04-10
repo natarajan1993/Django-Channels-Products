@@ -1,0 +1,65 @@
+[
+{
+  "model": "main.producttag",
+  "fields": {
+    "name": "Romance",
+    "slug": "romance",
+    "active": true,
+    "description": ""
+  }
+},
+{
+  "model": "main.producttag",
+  "fields": {
+    "name": "True Crime",
+    "slug": "true-crime",
+    "active": true,
+    "description": ""
+  }
+},
+{
+  "model": "main.producttag",
+  "fields": {
+    "name": "Science fiction",
+    "slug": "science-fiction",
+    "active": true,
+    "description": ""
+  }
+},
+{
+  "model": "main.producttag",
+  "fields": {
+    "name": "Horror",
+    "slug": "horror",
+    "active": true,
+    "description": ""
+  }
+},
+{
+  "model": "main.producttag",
+  "fields": {
+    "name": "Mystery",
+    "slug": "mystery",
+    "active": true,
+    "description": ""
+  }
+},
+{
+  "model": "main.producttag",
+  "fields": {
+    "name": "Thriller",
+    "slug": "thriller",
+    "active": true,
+    "description": ""
+  }
+},
+{
+  "model": "main.producttag",
+  "fields": {
+    "name": "Fantasy",
+    "slug": "fantasy",
+    "active": true,
+    "description": ""
+  }
+}
+]

@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <h1>Products</h1>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <td>{{object.name}}</td>
+        </tr>
+        <tr>
+            <th>Cover Images</th>
+            <td>
+                {% for image in object.productimage_set.all %}
+                    <img src="{{image.thumbnail.url}}" alt="cover">
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Price</th>
+            <td>{{object.price}}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <th>{{object.description|linebreaks}}</th>
+        </tr>
+        <tr>
+            <th>Tags</th>
+            <th>{{object.tags.all|join:","|default:"No tags available"}}</th>
+        </tr>
+        <tr>
+            <th>In stock</th>
+            <th>{{object.in_stock|yesno|capfirst}}</th>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <th>{{object.date_updated|date:"F Y"}}</th>
+        </tr>
+    </table>
+    <!-- <a href="{%url 'app-home' %}?product_id={{object.id}}">Add to basket</a> -->
+    <!-- <a href="#">Add to basket</a> -->
+
+{% endblock content %}
