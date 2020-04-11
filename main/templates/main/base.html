@@ -10,10 +10,11 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-­light">
+
         <a class="navbar-brand" href="/">BookTime</a>
-        <button
-          class="navbar-toggler"
-      type="button"
+        <button 
+          class="navbar-toggler"
+          type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
@@ -33,6 +34,9 @@
           </ul>
         </div>
       </nav>
+      {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">{{message}}</div>
+      {% endfor %}
       <div class="container">
         {% block content %}
         {% endblock content %}

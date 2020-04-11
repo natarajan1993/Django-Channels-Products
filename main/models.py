@@ -111,9 +111,6 @@ class ProductImage(models.Model):
     def __str__(self):
         return self.product.name
 
-
-
-
 THUMBNAIL_SIZE = (300,300)
 
 @receiver(pre_save,sender=ProductImage)
@@ -132,4 +129,29 @@ def generate_thumbnail(sender, instance, **kwargs):
     instance.thumbnail.save(instance.image.name,ContentFile(temp_thumb.read()), save=False,)
     temp_thumb.close()
 
+
+class Address(models.Model):
+    SUPPORTED_COUNTRIES = (
+        ("uk", "United Kingdom"), # First value is value stored, 2nd is value displayed
+        ("usa", "United States of America")
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=60)
+    address1 = models.CharField("Address Line 1", max_length=60)
+    address2 = models.CharField("Address Line 2", max_length=60, blank=True)
+    zip_code = models.CharField("Postal/ZIP code", max_length=12)
+    city = models.CharField(max_length=60)
+    country = models.CharField(max_length=3, choices = SUPPORTED_COUNTRIES)
+
+    def __str__(self):
+        return ", ".join([
+            self.name,
+            self.address1,
+            self.address2,
+            self.zip_code,
+            self.city,
+            self.country
+        ])
+    
 
