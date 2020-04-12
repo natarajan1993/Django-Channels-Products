@@ -1,16 +1,24 @@
 from django.urls import path
 from django.views.generic.detail import DetailView
 from django.contrib.auth import views as auth_views
+from django.views.generic.base import TemplateView
 
 from .views import (home,
                     about,
+
+                    add_to_basket,
+                    manage_basket,
+                    
                     ContactFormView,
-                    ProductListView,
                     SignupView,
+                    
+                    ProductListView,
+                    
                     AddressCreateView,
                     AddressDeleteView,
                     AddressListView,
-                    AddressUpdateView)
+                    AddressUpdateView,
+                    AddressSelectionView)
 from .models import Product
 from .forms import AuthenticationForm
 
@@ -30,5 +38,11 @@ urlpatterns = [
     path('address/create', AddressCreateView.as_view(), name='address_create'),
     path('address/<int:pk>', AddressUpdateView.as_view(), name='address_update'),
     path('address/<int:pk>/delete', AddressDeleteView.as_view(), name='address_delete'),
+
+    path("add_to_basket/", add_to_basket, name='add_to_basket'),
+    path("basket/", manage_basket, name="basket"),
+
+    path("order/done/", TemplateView.as_view(template_name="main/order_done.html"), name="checkout_done"),
+    path("order/address_select/", AddressSelectionView.as_view(), name="address_select"),
 
 ]

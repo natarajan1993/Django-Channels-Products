@@ -35,7 +35,7 @@
             <th>{{object.date_updated|date:"F Y"}}</th>
         </tr>
     </table>
-    <!-- <a href="{%url 'app-home' %}?product_id={{object.id}}">Add to basket</a> -->
+    <a href="{% url 'add_to_basket' %}?product_id={{object.id}}">Add to basket</a>
     <!-- <a href="#">Add to basket</a> -->
 
 {% endblock content %}

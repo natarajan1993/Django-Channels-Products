@@ -3,9 +3,10 @@ from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 from django.contrib.auth.forms import UsernameField
 from django.contrib.auth import authenticate
+from django.forms import inlineformset_factory
 
-
-from .models import User
+from .models import User, Basket, BasketLine, Address
+from .widgets import PlusMinusNumberInput
 
 import logging
 
@@ -70,3 +71,26 @@ class ContactForm(forms.Form):
                     "site@booktime.com", # From
                     ["natrajm93@gmail.com"], # To
                     fail_silently=False)
+
+
+"""Formsets can quickly bulk create related forms. we use inline because the models are related.
+    This will create a form for all Basketline objects connected to the basket with the only
+    editable field being the quantity. Formsets can also do CRUD operations"""
+BasketLineFormset = inlineformset_factory(
+    Basket,
+    BasketLine,
+    fields = ("quantity",),
+    extra = 0,
+    widgets = {"quantity": PlusMinusNumberInput()},
+)
+
+
+class AddressSelectionForm(forms.Form):
+    billing_address = forms.ModelChoiceField(queryset = None)
+    shipping_address = forms.ModelChoiceField(queryset = None)
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        queryset = Address.objects.filter(user=user)
+        self.fields['billing_address'].queryset = queryset
+        self.fields['shipping_address'].queryset = queryset

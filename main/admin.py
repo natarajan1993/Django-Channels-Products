@@ -3,10 +3,16 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
 from django.utils.html import format_html
 
-from .models import Product, ProductImage, ProductTag, User
+from .models import (Product, 
+                    ProductImage,
+                    ProductTag,
+                    User,
+                    BasketLine,
+                    Basket,
+                    OrderLine,
+                    Order)
 
 @admin.register(User)
-
 class UserAdmin(DjangoUserAdmin):
     fieldsets = (
         (None, {"fields": ('email','password')}),
@@ -51,6 +57,58 @@ class ProductImageAdmin(admin.ModelAdmin):
     def product_name(self, obj):
         return obj.product.name
 
+class BasketLineInline(admin.TabularInline):
+    model = BasketLine
+    raw_id_fields = ("product",)
+
+@admin.register(Basket)
+class BasketAdmin(admin.ModelAdmin):
+    list_display = ("id","user","status","count")
+    list_editable = ('status',)
+    list_filter = ('status',)
+    inlines = (BasketLineInline,)
+
+class OrderLineInline(admin.TabularInline):
+    model = OrderLine
+    raw_id_fields = ("product",)
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("id","user","status")
+    list_editable = ('status',)
+    list_filter = ('status',"shipping_country", "date_added")
+    inlines = (OrderLineInline,)
+
+    fieldsets = (
+        (None, {"fields": ("user", "status")}),
+        (
+            "Billing info",
+            {
+                "fields": (
+                    "billing_name",
+                    "billing_address1",
+                    "billing_address2",
+                    "billing_zipcode",
+                    "billing_city",
+                    "billing_country",
+                )
+            },
+        ),
+        (
+            "Shipping info",
+            {
+                "fields": (
+                    "shipping_name",
+                    "shipping_address1",
+                    "shipping_address2",
+                    "shipping_zipcode",
+                    "shipping_city",
+                    "shipping_country",
+                )
+            },
+        ),
+    )
+    
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)

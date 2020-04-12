@@ -49,6 +49,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Custom middlewares
+    'main.middlewares.basket_middleware',
 ]
 
 ROOT_URLCONF = 'booktime.urls'
