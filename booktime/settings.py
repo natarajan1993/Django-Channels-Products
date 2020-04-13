@@ -37,7 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'webpack_loader',
+    'django_extensions',
+    'debug_toolbar',
+    'django_tables2',
+    'widget_tweaks',
+    'rest_framework',
+    'django_filters',
+
     'main',
 ]
 
@@ -52,7 +60,11 @@ MIDDLEWARE = [
 
     # Custom middlewares
     'main.middlewares.basket_middleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+INTERNAL_IPS = ['127.0.0.1'] # For debug toolbar
+DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap.html' # For django tables
 
 ROOT_URLCONF = 'booktime.urls'
 
@@ -85,11 +97,25 @@ DATABASES = {
     }
 }
 
-WEBPACK_LOADER = {
+WEBPACK_LOADER = { # For django webpack
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'bundles/',
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.SessionAuthentication',
+                                        'rest_framework.authentication.BasicAuthentication'),
+    'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.DjangoModelPermissions',),
+    'DEFAULT_FILTER_BACKENDS':('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
+}
+
+GRAPH_MODELS = { # For django graphviz
+  'all_applications': True,
+  'group_models': True,
 }
 
 # Password validation

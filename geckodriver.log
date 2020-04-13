@@ -105,3 +105,12 @@ JavaScript error: chrome://marionette/content/proxy.js, line 287: NS_ERROR_NOT_I
 1586718030378	Marionette	WARN	TLS certificate errors will be ignored for this session
 JavaScript error: chrome://marionette/content/proxy.js, line 287: NS_ERROR_NOT_INITIALIZED
 1586718034030	Marionette	INFO	Stopped listening on port 34869
+1586735021657	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileLHMoib"
+1586735021865	addons.webextension.doh-rollout@mozilla.org	WARN	Loading extension 'doh-rollout@mozilla.org': Reading manifest: Invalid extension permission: networkStatus
+1586735022183	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1586735022183	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1586735022183	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1586735022183	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1586735023066	Marionette	INFO	Listening on port 39623
+1586735023162	Marionette	WARN	TLS certificate errors will be ignored for this session
+1586735024021	Marionette	INFO	Stopped listening on port 39623

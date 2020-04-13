@@ -1,12 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import FormView
 from django.views.generic.list import ListView
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django import forms
+from django.db import models as django_models
+import django_filters
+from django_filters.views import FilterView
 
 from main import forms as user_forms
 from main import models
@@ -14,6 +18,36 @@ from main import models
 import logging
 
 logger = logging.getLogger(__name__)
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+class OrderFilter(django_filters.FilterSet):
+    class Meta:
+        model = models.Order
+        fields = {
+            'user__email':['icontains'],
+            'status':['exact'],
+            'date_updated': ['gt','lt'],
+            'date_added': ['gt','lt'],
+        }
+        filter_overrides = {
+            django_models.DateTimeField: {
+                'filter_class': django_filters.DateFilter,
+                'extra': lambda f: {
+                    'widget': DateInput
+                }
+            }
+        }
+
+class OrderView(UserPassesTestMixin, FilterView):
+    """OrderView is a view that is only available to users that have access to
+        the admin interface as well, as the test_func function checks for that."""
+    filterset_class = OrderFilter
+    login_url = reverse_lazy("login")
+
+    def test_func(self):
+        return self.request.user.is_staff is True
 
 def home(request):
     return render(request, 'main/home.html')

@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.core.files.base import ContentFile
 from django.core.validators import MinValueValidator
 from django.dispatch import receiver
@@ -292,3 +292,15 @@ class OrderLine(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT) # Protect the corresponding Product if the product instance is deleted in the order
     status = models.IntegerField(choices=STATUSES, default = NEW)
 
+
+@receiver(post_save, sender=OrderLine)
+def orderline_to_order_status(sender, instance, **kwargs):
+    """This signal will be executed after saving instances of the OrderLine
+        model. The first thing it does is check whether any order lines connected
+        to the order have statuses below “sent.” If there is any, the execution is
+        terminated. If there is no line below the “sent” status, the whole order is
+        marked as “done.”"""
+    if not instance.order.lines.filter(status__lt=OrderLine.SENT).exists():
+        logger.info(f"All lines for order {instance.order.id} have been processed. Marking as done")
+        instance.order.status = Order.DONE
+        instance.order.save()
