@@ -1,0 +1,32 @@
+{% extends 'admin/base_site.html' %}
+
+{% block extrahead %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+{% endblock extrahead %}
+
+{% block content %}
+    <script>
+        let ctx = document.getElementById("myChart");
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels:{{labels|safe}},
+                datasets: [{
+                    label: 'No. of orders',
+                    backgroundColor: 'blue',
+                    data: {{values|safe}}
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes:[{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock content %}

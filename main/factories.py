@@ -1,7 +1,7 @@
 import factory
 import factory.fuzzy
 
-from .models import User, Product, Address
+from .models import User, Product, Address, Order, OrderLine
 
 class UserFactory(factory.django.DjangoModelFactory):
     email = "user@site.com"
@@ -22,3 +22,12 @@ class AddressFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Address
+
+
+class OrderLineFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = OrderLine
+class OrderFactory(factory.django.DjangoModelFactory):
+    user = factory.SubFactory(UserFactory)
+    class Meta:
+        model = Order
