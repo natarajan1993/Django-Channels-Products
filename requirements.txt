@@ -34,7 +34,7 @@ ptyprocess==0.6.0
 pycparser==2.20
 pydot==1.4.1
 pydotplus==2.0.2
-Pygments==2.6.1
+Pygments==2.7.4
 pygraphviz==1.5
 pyparsing==2.4.7
 Pyphen==0.9.5
