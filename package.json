@@ -24,7 +24,7 @@
     "jest": "^25.3.0",
     "webpack": "^4.42.1",
     "webpack-bundle-tracker": "^0.3.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "react": "^16.13.1",
